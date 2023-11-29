@@ -2,6 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:appsflyer_sample_app/utils/varibles.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+import 'package:appsflyer_sample_app/pages/apples.dart';
+import 'package:appsflyer_sample_app/pages/bananas.dart';
+import 'package:appsflyer_sample_app/pages/peaches.dart';
+import 'package:flutter/services.dart';
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: "/",
+      builder: (context, state) => const HomePage(),
+      routes: [
+        GoRoute(
+          path: "apples",
+          builder: (context, state) => const ApplesPage(),
+        ),
+        GoRoute(
+          path: "bananas",
+          builder: (context, state) => const BananasPage(),
+        ),
+        GoRoute(
+          path: "peaches",
+          builder: (context, state) => const PeachesPage(),
+        )
+      ],
+    ),
+  ],
+  onException: (_, GoRouterState state, GoRouter router) {
+    router.go('/');
+  },
+);
 
 void main() {
   runApp(const MyApp());
@@ -12,8 +44,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const HomePage(),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp.router(
+      routerConfig: _router,
       debugShowCheckedModeBanner: false,
       title: 'One Link AppsFlyer',
       theme: ThemeData(
@@ -45,11 +81,11 @@ class HomePage extends StatelessWidget {
           width: 130,
         ),
       ),
-      body: Padding(
+      body: const Padding(
         padding: horizontalPagePadding,
         child: Column(
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Gap(15),
@@ -70,52 +106,84 @@ class HomePage extends StatelessWidget {
                 Gap(15)
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Gap(5),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    animationDuration: Duration.zero,
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Colors.transparent,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Gap(5),
+                  MyImageButton("Apples", "assets/images/apples.png", "/apples",
+                      index: 0),
+                  Gap(5),
+                  MyImageButton(
+                    "Bananas",
+                    "assets/images/bananas.png",
+                    "/bananas",
+                    index: 1,
                   ),
-                  onPressed: () {
-                    print("navigate");
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Image.asset(
-                          "assets/images/apples.png",
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: colorAFDark,
-                          ),
-                          child: const Text(
-                            "Apples Title",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Gap(5),
+                  MyImageButton(
+                    "Peaches",
+                    "assets/images/peaches.png",
+                    "/peaches",
+                    index: 2,
                   ),
-                ),
-              ],
+                  Gap(5),
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyImageButton extends StatelessWidget {
+  final String title, imgPath, routePath;
+  final int index;
+  const MyImageButton(this.title, this.imgPath, this.routePath,
+      {required this.index, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          animationDuration: Duration.zero,
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+        ),
+        onPressed: () {
+          context.push(routePath);
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Image.asset(
+                imgPath,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: colorAFDark,
+                ),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
