@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:appsflyer_sample_app/utils/varibles.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter/material.dart';
 import 'package:appsflyer_sample_app/pages/apples.dart';
 import 'package:appsflyer_sample_app/pages/bananas.dart';
 import 'package:appsflyer_sample_app/pages/peaches.dart';

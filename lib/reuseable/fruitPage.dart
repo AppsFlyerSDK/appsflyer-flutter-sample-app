@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:appsflyer_sample_app/reuseable/conversionDataPage.dart';
 import 'package:appsflyer_sample_app/utils/varibles.dart';
 
 class FruitPage extends StatelessWidget {
@@ -10,6 +11,26 @@ class FruitPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+        height: 70,
+        color: Colors.transparent,
+        child: TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ConversionDataPage()),
+            );
+          },
+          child: const Text(
+            "Show conversion data",
+            style: TextStyle(
+              fontSize: 24,
+              color: colorAFBlue,
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: colorAFBlue,
@@ -21,6 +42,7 @@ class FruitPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset("assets/images/$fruit.png"),
           const Center(
@@ -31,8 +53,29 @@ class FruitPage extends StatelessWidget {
               ),
             ),
           ),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorAFBlue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            onPressed: () {},
+            icon: const Icon(
+              Icons.copy,
+              size: 24.0,
+              color: Colors.white,
+            ),
+            label: const Text(
+              'Copy link',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
-      ),
-    );
-  }
+     ),
+);
+}
 }
