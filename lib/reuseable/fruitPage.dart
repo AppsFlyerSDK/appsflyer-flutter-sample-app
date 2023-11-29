@@ -75,7 +75,7 @@ class FruitPage extends StatelessWidget {
             ),
           ),
         ],
-     ),
-);
-}
+      ),
+    );
+  }
 }

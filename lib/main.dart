@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -7,6 +10,15 @@ import 'package:appsflyer_sample_app/pages/apples.dart';
 import 'package:appsflyer_sample_app/pages/bananas.dart';
 import 'package:appsflyer_sample_app/pages/peaches.dart';
 import 'package:flutter/services.dart';
+
+AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
+  appInviteOneLink: "H5hv",
+  afDevKey: "sQ84wpdxRTR4RMCaE9YqS4",
+  appId: "id1292821412",
+  showDebug: true,
+);
+
+AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
 
 final _router = GoRouter(
   routes: [
@@ -36,6 +48,10 @@ final _router = GoRouter(
 
 void main() {
   runApp(const MyApp());
+  appsflyerSdk.initSdk(
+    registerConversionDataCallback: true,
+    registerOnDeepLinkingCallback: true,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -69,6 +85,38 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
+    appsflyerSdk.onDeepLinking((DeepLinkResult res) {
+      switch (res.status) {
+        case Status.FOUND:
+          print("deepLinkData: ${res.deepLink}");
+          switch (res.deepLink?.deepLinkValue) {
+            case "apples":
+              GoRouter.of(context).push("/apples");
+              break;
+            case "bananas":
+              GoRouter.of(context).push("/bananas");
+              break;
+            case "peaches":
+              GoRouter.of(context).push("/peaches");
+              break;
+          }
+          break;
+        case Status.NOT_FOUND:
+          print("deep link not found");
+          break;
+        case Status.ERROR:
+          print("deep link error: ${res.error}");
+          break;
+        case Status.PARSE_ERROR:
+          print("deep link status parsing error");
+          break;
+      }
+    });
+
+    appsflyerSdk.onInstallConversionData((res) {
+      print("res conv data: $res");
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
