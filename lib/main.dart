@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:appsflyer_sample_app/utils/appsFlyerSDK.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -114,7 +115,8 @@ class HomePage extends StatelessWidget {
     });
 
     appsflyerSdk.onInstallConversionData((res) {
-      print("res conv data: $res");
+      print(res["payload"]);
+      convData = res["payload"];
     });
 
     return Scaffold(
