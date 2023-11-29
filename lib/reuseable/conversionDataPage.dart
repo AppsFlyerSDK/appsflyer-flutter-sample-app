@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:appsflyer_sample_app/utils/appsFlyerSDK.dart';
 import 'package:appsflyer_sample_app/utils/varibles.dart';
+import 'package:provider/provider.dart';
 
 class ConversionDataPage extends StatelessWidget {
   const ConversionDataPage({super.key});
@@ -18,7 +20,35 @@ class ConversionDataPage extends StatelessWidget {
           width: 130,
         ),
       ),
-      body: const Text("No convesion data"),
+      body: context.watch<ConvDataProvider>().convData is Map<String, dynamic>
+          ? Padding(
+              padding: horizontalPagePadding,
+              child: Expanded(
+                child: ListView(
+                  children: [
+                    for (String key
+                        in context.watch<ConvDataProvider>().convData.keys)
+                      Wrap(
+                        children: [
+                          Text(
+                            "$key: ",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 18),
+                          ),
+                          Text(
+                            context
+                                .watch<ConvDataProvider>()
+                                .convData[key]
+                                .toString(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            )
+          : const Text("No convresion data"),
     );
   }
 }

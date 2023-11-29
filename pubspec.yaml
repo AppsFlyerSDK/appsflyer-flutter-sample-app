@@ -1,7 +1,7 @@
 name: appsflyer_sample_app
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -17,7 +17,8 @@ dependencies:
   flutter_svg: ^2.0.9
   go_router: ^12.1.1
   appsflyer_sdk: ^6.12.2
-  # flutter_animate: ^4.3.0
+  flutter_animate: ^4.2.0+1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
@@ -26,7 +27,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:

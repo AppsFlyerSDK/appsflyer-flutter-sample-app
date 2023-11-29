@@ -19,5 +19,28 @@ AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
 AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
 
 DeepLink? deepLinkData;
+
+class ConvDataProvider extends ChangeNotifier {
   var convData;
 
+  ConvDataProvider({this.convData = "No Conversion data"});
+
+  setConvData({required convData}) async {
+    this.convData = convData;
+    notifyListeners();
+  }
+}
+
+handleDeepLinkValue(deepLinkValue, context) {
+  switch (deepLinkValue) {
+    case "apples":
+      GoRouter.of(context).push("/apples");
+      break;
+    case "bananas":
+      GoRouter.of(context).push("/bananas");
+      break;
+    case "peaches":
+      GoRouter.of(context).push("/peaches");
+      break;
+  }
+}

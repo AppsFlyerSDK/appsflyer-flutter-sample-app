@@ -1,18 +1,22 @@
-import 'package:appsflyer_sample_app/reuseable/conversionDataPage.dart';
-import 'package:appsflyer_sample_app/utils/appsFlyerSDK.dart';
-import 'package:appsflyer_sample_app/utils/varibles.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:appsflyer_sample_app/reuseable/conversionDataPage.dart';
+import 'package:appsflyer_sample_app/utils/appsFlyerSDK.dart';
+import 'package:appsflyer_sample_app/utils/varibles.dart';
 
 class FruitPage extends StatelessWidget {
-  final String fruit;
+  final String fruit, sub1Value;
 
-  FruitPage({super.key, required this.fruit});
+  FruitPage({super.key, required this.sub1Value, required this.fruit});
 
   @override
   Widget build(BuildContext context) {
+    AppsFlyerInviteLinkParams linkParams = AppsFlyerInviteLinkParams(
+        baseDeepLink: "flutter-onelink-app.onelink.me",
+        customParams: {"deep_link_value": fruit, "deep_link_sub1": sub1Value});
+
     return Scaffold(
       bottomNavigationBar: Container(
         height: 70,
@@ -101,7 +105,12 @@ class FruitPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    print("copy link");
+                    appsflyerSdk.generateInviteLink(linkParams, (result) {
+                      Clipboard.setData(ClipboardData(
+                          text: result["payload"]["userInviteURL"]));
+                    }, (error) {
+                      print("error-123 $error");
+                    });
                   },
                   icon: const Icon(
                     Icons.copy,
@@ -138,7 +147,12 @@ class FruitPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    print("copy link");
+                    appsflyerSdk.generateInviteLink(linkParams, (result) {
+                      Clipboard.setData(ClipboardData(
+                          text: result["payload"]["userInviteURL"]));
+                    }, (error) {
+                      print("error-123 $error");
+                    });
                   },
                   icon: const Icon(
                     Icons.copy,

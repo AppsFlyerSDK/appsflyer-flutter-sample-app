@@ -7,6 +7,7 @@ class BananasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FruitPage(
+      sub1Value: "20",
       fruit: "bananas",
     );
   }
