@@ -1,0 +1,1 @@
+# appsflyer-flutter-sample-app
