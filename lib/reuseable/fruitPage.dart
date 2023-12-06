@@ -2,8 +2,8 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:appsflyer_sample_app/reuseable/conversionDataPage.dart';
-import 'package:appsflyer_sample_app/utils/appsFlyerSDK.dart';
+import 'package:appsflyer_sample_app/pages/conversionDataPage.dart';
+import 'package:appsflyer_sample_app/utils/appsFlyerSDKManager.dart';
 import 'package:appsflyer_sample_app/utils/varibles.dart';
 
 class FruitPage extends StatelessWidget {
@@ -13,10 +13,6 @@ class FruitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppsFlyerInviteLinkParams linkParams = AppsFlyerInviteLinkParams(
-        baseDeepLink: "flutter-onelink-app.onelink.me",
-        customParams: {"deep_link_value": fruit, "deep_link_sub1": sub1Value});
-
     return Scaffold(
       bottomNavigationBar: Container(
         height: 70,
@@ -48,8 +44,8 @@ class FruitPage extends StatelessWidget {
           width: 130,
         ),
       ),
-      body: deepLinkData?.deepLinkValue == fruit ||
-              deepLinkData?.clickEvent["fruit_name"] == fruit
+      body: AppsflyerSDKManager().deepLinkData?.deepLinkValue == fruit ||
+              AppsflyerSDKManager().deepLinkData?.clickEvent["fruit_name"] == fruit
           ? Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -57,9 +53,9 @@ class FruitPage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Image.asset("assets/images/$fruit.png"),
-                    deepLinkData?.deepLinkValue != null
+                    AppsflyerSDKManager().deepLinkData?.deepLinkValue != null
                         ? Text(
-                            deepLinkData!.clickEvent["deep_link_sub1"],
+                            AppsflyerSDKManager().deepLinkData!.clickEvent["deep_link_sub1"],
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -67,7 +63,7 @@ class FruitPage extends StatelessWidget {
                             ),
                           )
                         : Text(
-                            deepLinkData!.clickEvent["fruit_amount"],
+                            AppsflyerSDKManager().deepLinkData!.clickEvent["fruit_amount"],
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -80,7 +76,7 @@ class FruitPage extends StatelessWidget {
                   child: ListView(
                     padding: horizontalPagePadding,
                     children: [
-                      for (String key in deepLinkData!.clickEvent.keys)
+                      for (String key in AppsflyerSDKManager().deepLinkData!.clickEvent.keys)
                         Wrap(
                           children: [
                             Text(
@@ -89,7 +85,7 @@ class FruitPage extends StatelessWidget {
                                   fontWeight: FontWeight.w700, fontSize: 18),
                             ),
                             Text(
-                              deepLinkData!.clickEvent[key].toString(),
+                              AppsflyerSDKManager().deepLinkData!.clickEvent[key].toString(),
                               style: const TextStyle(fontSize: 18),
                             ),
                           ],
@@ -105,12 +101,8 @@ class FruitPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    appsflyerSdk.generateInviteLink(linkParams, (result) {
-                      Clipboard.setData(ClipboardData(
-                          text: result["payload"]["userInviteURL"]));
-                    }, (error) {
-                      print("error-123 $error");
-                    });
+                    AppsflyerSDKManager()
+                        .generateInviteLink(fruit: fruit, sub1Value: sub1Value);
                   },
                   icon: const Icon(
                     Icons.copy,
@@ -147,12 +139,8 @@ class FruitPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    appsflyerSdk.generateInviteLink(linkParams, (result) {
-                      Clipboard.setData(ClipboardData(
-                          text: result["payload"]["userInviteURL"]));
-                    }, (error) {
-                      print("error-123 $error");
-                    });
+                    AppsflyerSDKManager()
+                        .generateInviteLink(fruit: fruit, sub1Value: sub1Value);
                   },
                   icon: const Icon(
                     Icons.copy,
