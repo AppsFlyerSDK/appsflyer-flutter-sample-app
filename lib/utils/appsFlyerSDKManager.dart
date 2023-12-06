@@ -3,7 +3,6 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:appsflyer_sample_app/main.dart';
 
 class AppsflyerSDKManager {
   static final AppsflyerSDKManager _instance = AppsflyerSDKManager._internal();
@@ -57,7 +56,7 @@ class AppsflyerSDKManager {
     _appsflyerSdk?.onDeepLinking((res) {
       switch (res.status) {
         case Status.FOUND:
-          print("deeplink happend res: ${res.deepLink}");
+          debugPrint("deeplink happend res: ${res.deepLink}");
           deepLinkData = res.deepLink;
           String? navigateTo;
           if (deepLinkData?.getStringValue("fruit_name") != null &&
@@ -79,17 +78,17 @@ class AppsflyerSDKManager {
                 break;
             }
           } catch (e) {
-            print("Navigation error: $e");
+            debugPrint("Navigation error: $e");
           }
           break;
         case Status.NOT_FOUND:
-          print("deep link not found");
+          debugPrint("deep link not found");
           break;
         case Status.ERROR:
-          print("deep link error: ${res.error}");
+          debugPrint("deep link error: ${res.error}");
           break;
         case Status.PARSE_ERROR:
-          print("deep link status parsing error");
+          debugPrint("deep link status parsing error");
           break;
       }
     });
@@ -106,7 +105,7 @@ class AppsflyerSDKManager {
       Clipboard.setData(
           ClipboardData(text: result["payload"]["userInviteURL"]));
     }, (error) {
-      print("error-123 $error");
+      debugPrint("error-123 $error");
     });
   }
 }

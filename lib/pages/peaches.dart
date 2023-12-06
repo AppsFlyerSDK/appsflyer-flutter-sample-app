@@ -6,6 +6,6 @@ class PeachesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FruitPage(sub1Value: "45", fruit: "peaches");
+    return const FruitPage(sub1Value: "45", fruit: "peaches");
   }
 }
