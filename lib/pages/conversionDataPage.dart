@@ -21,14 +21,14 @@ class ConversionDataPage extends StatelessWidget {
       ),
       body: Container(
         padding: horizontalPagePadding,
-        child: const ConvarsionData(),
+        child: const ConversionData(),
       ),
     );
   }
 }
 
-class ConvarsionData extends StatelessWidget {
-  const ConvarsionData({super.key});
+class ConversionData extends StatelessWidget {
+  const ConversionData({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class ConvarsionData extends StatelessWidget {
             children: widgets,
           );
         } else {
-          return const Text("loading data");
+          return const Text("loading data...");
         }
       },
     );
