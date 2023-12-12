@@ -102,14 +102,30 @@ class DeeplinkData extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Image.asset("assets/images/$fruit.png"),
-            Text(
-              AppsflyerSDKManager().deepLinkData!.clickEvent["deep_link_sub1"],
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-              ),
-            )
+            AppsflyerSDKManager().deepLinkData?.clickEvent["deep_link_sub1"] !=
+                    null
+                ? Text(
+                    AppsflyerSDKManager()
+                        .deepLinkData!
+                        .clickEvent["deep_link_sub1"]
+                        .toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
+                  )
+                : Text(
+                    AppsflyerSDKManager()
+                        .deepLinkData!
+                        .getStringValue("fruit_amount")
+                        .toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
+                  )
           ],
         ),
         Expanded(

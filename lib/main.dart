@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: routes,
       debugShowCheckedModeBanner: false,
-      title: 'One Link AppsFlyer',
+      title: 'OneLink AppsFlyer',
       theme: ThemeData(
         textTheme: const TextTheme(
           bodyMedium: TextStyle(

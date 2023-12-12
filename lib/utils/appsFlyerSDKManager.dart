@@ -59,11 +59,12 @@ class AppsflyerSDKManager {
           debugPrint("deeplink happend res: ${res.deepLink}");
           deepLinkData = res.deepLink;
           String? navigateTo;
-          if (deepLinkData?.getStringValue("fruit_name") != null &&
-              deepLinkData?.getStringValue("fruit_amount") != null) {
+          if (deepLinkData?.deepLinkValue != null) {
+            navigateTo = deepLinkData?.deepLinkValue;
+          } else if (deepLinkData?.getStringValue("fruit_name") != null) {
             navigateTo = deepLinkData?.getStringValue("fruit_name");
           } else {
-            navigateTo = deepLinkData?.deepLinkValue;
+            throw "No deepLinkValue or fruit_name";
           }
           try {
             switch (navigateTo) {
@@ -100,7 +101,8 @@ class AppsflyerSDKManager {
             baseDeepLink: "flutter-onelink-app.onelink.me",
             customParams: {
               "deep_link_value": fruit,
-              "deep_link_sub1": sub1Value
+              "deep_link_sub1": sub1Value,
+              "deep_link_sub2": "THIS_USER_ID",
             }), (result) {
       Clipboard.setData(
           ClipboardData(text: result["payload"]["userInviteURL"]));
