@@ -24,7 +24,7 @@ class AppsflyerSDKManager {
       AppsFlyerOptions(
         appInviteOneLink: "27kG",
         afDevKey: "sQ84wpdxRTR4RMCaE9YqS4",
-        appId: "id1292821412",
+        appId: "1292821412",
         showDebug: true,
       ),
     );
